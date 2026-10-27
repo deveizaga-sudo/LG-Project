@@ -47,7 +47,7 @@ html, body {
 
 svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Ambient backdrop tinted from the featured item */
+/* Ambient backdrop tinted from the item being resumed */
 .backdrop {
   position: absolute;
   inset: 0;
@@ -215,9 +215,6 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
   overflow: hidden;
 }
 .hero__actions { display: flex; gap: 24px; }
-.hero__dots { position: absolute; left: 32px; bottom: 40px; display: flex; gap: 12px; }
-.hero__dots i { width: 14px; height: 14px; border-radius: 7px; background: rgba(255,255,255,.3); transition: width .3s var(--ease), background .3s; }
-.hero__dots i.is-active { width: 44px; background: var(--text); }
 
 .btn {
   display: inline-flex;

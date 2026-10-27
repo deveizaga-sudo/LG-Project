@@ -9,36 +9,21 @@ var AppData = {
     { id: 'settings', label: 'Settings', icon: 'settings' }
   ],
 
-  featured: [
-    {
-      tag: 'New season',
-      title: 'Northern Lights',
-      meta: '2026 · Drama · 3 Seasons · 4K HDR',
-      desc: 'A remote research station at the edge of the Arctic uncovers a signal that should not exist — and the crew must decide who to trust before the long night falls.',
-      art: 'linear-gradient(135deg, #0f2027 0%, #203a43 45%, #2c5364 100%)'
-    },
-    {
-      tag: 'Trending',
-      title: 'Desert Run',
-      meta: '2025 · Action · 2h 4m · Dolby Vision',
-      desc: 'Three couriers race across an endless desert to deliver a package that could end a decades-long feud between rival cities.',
-      art: 'linear-gradient(135deg, #3a1c0b 0%, #b5541c 55%, #f0a04b 100%)'
-    },
-    {
-      tag: 'Live now',
-      title: 'Ocean Worlds',
-      meta: 'Nature · Episode 4 · 8K',
-      desc: 'Dive into the deepest trenches on Earth and meet the creatures that thrive in total darkness.',
-      art: 'linear-gradient(135deg, #001b44 0%, #00508f 55%, #00a6c0 100%)'
-    }
-  ],
-
+  // No ads: the home screen shows only the viewer's own content, apps and
+  // inputs. There are no promoted titles, recommendations or sponsored
+  // tiles, and app.js drops any item flagged `sponsored` or `promoted`.
   rows: [
     {
       title: 'Continue watching',
       type: 'wide',
       items: [
-        { title: 'Northern Lights · S3 E2', progress: 64, art: 'linear-gradient(135deg,#0f2027,#2c5364)' },
+        {
+          title: 'Northern Lights · S3 E2',
+          progress: 64,
+          meta: 'Season 3 · Episode 2 · 22 min left',
+          desc: 'A remote research station at the edge of the Arctic uncovers a signal that should not exist — and the crew must decide who to trust before the long night falls.',
+          art: 'linear-gradient(135deg,#0f2027,#2c5364)'
+        },
         { title: 'Kitchen Masters', progress: 30, art: 'linear-gradient(135deg,#5f2c82,#49a09d)' },
         { title: 'The Long Game', progress: 85, art: 'linear-gradient(135deg,#232526,#5b6467)' },
         { title: 'City Nights', progress: 12, art: 'linear-gradient(135deg,#141e30,#243b55)' },
@@ -58,21 +43,6 @@ var AppData = {
         { title: 'Games', icon: 'game', art: 'linear-gradient(135deg,#654ea3,#eaafc8)' },
         { title: 'Screen Share', icon: 'cast', art: 'linear-gradient(135deg,#373b44,#4286f4)' },
         { title: 'Store', icon: 'bag', art: 'linear-gradient(135deg,#ff512f,#dd2476)' }
-      ]
-    },
-    {
-      title: 'Recommended for you',
-      type: 'poster',
-      items: [
-        { title: 'Desert Run', art: 'linear-gradient(160deg,#3a1c0b,#f0a04b)' },
-        { title: 'Ocean Worlds', art: 'linear-gradient(160deg,#001b44,#00a6c0)' },
-        { title: 'Midnight Signal', art: 'linear-gradient(160deg,#0f0c29,#302b63,#24243e)' },
-        { title: 'Green Valley', art: 'linear-gradient(160deg,#0b3d0b,#56ab2f)' },
-        { title: 'Neon District', art: 'linear-gradient(160deg,#41295a,#2f0743)' },
-        { title: 'Summit', art: 'linear-gradient(160deg,#2c3e50,#bdc3c7)' },
-        { title: 'Red Line', art: 'linear-gradient(160deg,#4b134f,#c94b4b)' },
-        { title: 'Paper Planes', art: 'linear-gradient(160deg,#1e3c72,#2a5298)' },
-        { title: 'Low Tide', art: 'linear-gradient(160deg,#0f3443,#34e89e)' }
       ]
     },
     {

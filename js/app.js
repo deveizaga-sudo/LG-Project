@@ -3,9 +3,7 @@
   var stage = $('stage');
   var scroller = $('scroller');
   var rail = $('rail');
-  var heroIndex = 0;
-  var heroTimer = null;
-  var heroPaused = false;
+  var heroItem = null;
   var lastMainFocus = null;
   var activeRail = 'home';
 
@@ -56,22 +54,25 @@
     $('rows').innerHTML = html;
   }
 
-  /* ---------- Hero carousel ---------- */
-  function showHero(i) {
-    heroIndex = (i + AppData.featured.length) % AppData.featured.length;
-    var f = AppData.featured[heroIndex];
-    $('hero-tag').textContent = f.tag;
-    $('hero-title').textContent = f.title;
-    $('hero-meta').textContent = f.meta;
-    $('hero-desc').textContent = f.desc;
-    stage.style.setProperty('--hero-bg', f.art);
-    var dots = '';
-    for (var d = 0; d < AppData.featured.length; d++) dots += '<i' + (d === heroIndex ? ' class="is-active"' : '') + '></i>';
-    $('hero-dots').innerHTML = dots;
+  /* ---------- No ads ---------- */
+  // Drop anything a data source marks as paid placement, and any row left empty.
+  function stripAds() {
+    AppData.rows = AppData.rows.filter(function (row) {
+      row.items = row.items.filter(function (item) { return !item.sponsored && !item.promoted; });
+      return row.items.length > 0;
+    });
   }
-  function startHeroTimer() {
-    clearInterval(heroTimer);
-    heroTimer = setInterval(function () { showHero(heroIndex + 1); }, 8000);
+
+  /* ---------- Hero: resume what the viewer was last watching ---------- */
+  function showHero() {
+    var resume = AppData.rows.filter(function (row) { return row.type === 'wide'; })[0];
+    heroItem = resume && resume.items[0];
+    if (!heroItem) { $('hero').hidden = true; return; }
+    $('hero-tag').textContent = 'Continue watching';
+    $('hero-title').textContent = heroItem.title;
+    $('hero-meta').textContent = heroItem.meta || '';
+    $('hero-desc').textContent = heroItem.desc || '';
+    stage.style.setProperty('--hero-bg', heroItem.art);
   }
 
   /* ---------- Scrolling to keep focus in view ---------- */
@@ -98,6 +99,11 @@
     stage.classList.toggle('is-scrolled', y > 0);
   }
 
+  // First item on the page: the Resume button, or the first row if there is nothing to resume.
+  function homeFocus() {
+    return $('hero').hidden ? document.querySelector('.row .focusable') : document.querySelector('.hero .focusable');
+  }
+
   /* ---------- Focus side-effects ---------- */
   Nav.on('focus', function (el) {
     var inRail = !!el.closest('.rail');
@@ -105,12 +111,6 @@
     if (el.closest('.viewport') || el.closest('.topbar')) lastMainFocus = el;
     if (el.closest('.row')) { scrollRowTo(el); scrollPageTo(el); }
     else if (el.closest('.hero') || el.closest('.topbar')) scrollPageTo(el);
-    // Hold the carousel still while its buttons are focused.
-    var onHero = !!el.closest('.hero');
-    if (onHero !== heroPaused) {
-      heroPaused = onHero;
-      if (onHero) clearInterval(heroTimer); else startHeroTimer();
-    }
   });
 
   // Leaving the rail returns to where the user came from.
@@ -125,10 +125,10 @@
   }
 
   function openModal(data) {
-    $('modal-tag').textContent = data.tag || 'Featured';
+    $('modal-tag').textContent = data.tag || 'Details';
     $('modal-title').textContent = data.title;
-    $('modal-meta').textContent = data.meta || '2026 · 4K HDR · Dolby Atmos';
-    $('modal-desc').textContent = data.desc || 'Pick up right where you left off. Stream in up to 4K HDR with Dolby Atmos sound on your LG TV.';
+    $('modal-meta').textContent = data.meta || '';
+    $('modal-desc').textContent = data.desc || '';
     $('modal-art').style.setProperty('--art', data.art);
     $('modal').hidden = false;
     Nav.setScope($('modal'));
@@ -158,10 +158,10 @@
         toast(el.textContent + ' selected');
         break;
       case 'hero-play':
-        toast('Playing ' + AppData.featured[heroIndex].title);
+        toast('Resuming ' + heroItem.title);
         break;
       case 'hero-info':
-        openModal(AppData.featured[heroIndex]);
+        openModal(heroItem);
         break;
       case 'card':
         var d = itemFor(el);
@@ -195,7 +195,7 @@
     var cur = Nav.current;
     // Back from content returns to the top of the page first, then offers exit.
     if (cur && cur.closest('.row')) {
-      Nav.focus(document.querySelector('.hero .focusable'));
+      Nav.focus(homeFocus());
       return;
     }
     $('exit-dialog').hidden = false;
@@ -215,20 +215,15 @@
   function init() {
     fitStage();
     window.addEventListener('resize', fitStage);
+    stripAds();
     renderRail();
     renderRows();
     Icons.hydrate();
-    showHero(0);
-    startHeroTimer();
+    showHero();
     tick();
     setInterval(tick, 15000);
     Nav.init();
-    Nav.focus(document.querySelector('.hero .focusable'));
-
-    // Pause the carousel while the app is in the background.
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) clearInterval(heroTimer); else if (!heroPaused) startHeroTimer();
-    });
+    Nav.focus(homeFocus());
   }
 
   document.addEventListener('DOMContentLoaded', init);
