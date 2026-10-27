@@ -69,7 +69,7 @@
     heroItem = resume && resume.items[0];
     if (!heroItem) { $('hero').hidden = true; return; }
     $('hero-tag').textContent = 'Continue watching';
-    $('hero-title').textContent = heroItem.title;
+    $('hero-title').textContent = heroItem.show || heroItem.title;
     $('hero-meta').textContent = heroItem.meta || '';
     $('hero-desc').textContent = heroItem.desc || '';
     stage.style.setProperty('--hero-bg', heroItem.art);
@@ -85,7 +85,7 @@
     var offset = 0;
     // Keep the focused card one slot from the left edge once past the first item.
     if (index > 0) offset = track.children[index - 1].offsetLeft - ROW_LEFT_PAD + 16;
-    var max = Math.max(0, track.scrollWidth - (1920 - 112 - ROW_LEFT_PAD - 64));
+    var max = Math.max(0, track.scrollWidth - (1920 - 112 - ROW_LEFT_PAD - 96));
     track.style.transform = 'translateX(' + -Math.min(offset, max) + 'px)';
   }
 
@@ -94,6 +94,8 @@
     var y = 0;
     // Hero and top bar stay visible until the second row is reached.
     if (row && row.getAttribute('data-row') > 0) y = row.offsetTop - 360;
+    // Don't scroll past the end of the content.
+    y = Math.min(y, scroller.offsetHeight - 1080);
     scroller.style.transform = 'translateY(' + -Math.max(0, y) + 'px)';
     $('backdrop').style.opacity = y > 0 ? 0.35 : 1;
     stage.classList.toggle('is-scrolled', y > 0);
@@ -180,7 +182,7 @@
         closeOverlay('exit-dialog');
         break;
       case 'exit-confirm':
-        if (window.webOS && webOS.platformBack) webOS.platformBack();
+        if (window.FireTV) FireTV.exit();   // bridge from MainActivity
         else window.close();
         break;
       default:

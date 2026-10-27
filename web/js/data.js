@@ -1,4 +1,4 @@
-/* Static demo content. Swap with API calls / Luna service data as needed. */
+/* Static demo content. Swap with real data (e.g. from the Android side) as needed. */
 var AppData = {
   rail: [
     { id: 'home', label: 'Home', icon: 'home' },
@@ -19,6 +19,7 @@ var AppData = {
       items: [
         {
           title: 'Northern Lights · S3 E2',
+          show: 'Northern Lights',
           progress: 64,
           meta: 'Season 3 · Episode 2 · 22 min left',
           desc: 'A remote research station at the edge of the Arctic uncovers a signal that should not exist — and the crew must decide who to trust before the long night falls.',
@@ -34,7 +35,7 @@ var AppData = {
       title: 'Apps',
       type: 'app',
       items: [
-        { title: 'Live TV', icon: 'live', art: 'linear-gradient(135deg,#e6007e,#ff4fa7)' },
+        { title: 'Live TV', icon: 'live', art: 'linear-gradient(135deg,#ff6a13,#ff9a52)' },
         { title: 'Movies', icon: 'film', art: 'linear-gradient(135deg,#c31432,#240b36)' },
         { title: 'Music', icon: 'music', art: 'linear-gradient(135deg,#11998e,#38ef7d)' },
         { title: 'Gallery', icon: 'image', art: 'linear-gradient(135deg,#f7971e,#ffd200)' },
@@ -49,11 +50,10 @@ var AppData = {
       title: 'Inputs',
       type: 'input',
       items: [
-        { title: 'HDMI 1', sub: 'Game console', icon: 'hdmi', live: true },
-        { title: 'HDMI 2', sub: 'Set-top box', icon: 'hdmi', live: false },
-        { title: 'HDMI 3 (eARC)', sub: 'Soundbar', icon: 'hdmi', live: true },
-        { title: 'USB', sub: 'No device', icon: 'usb', live: false },
-        { title: 'Antenna', sub: 'Broadcast', icon: 'antenna', live: true }
+        { title: 'Cube HDMI', sub: 'Cable box', icon: 'hdmi', live: true },
+        { title: 'TV HDMI 2', sub: 'Game console', icon: 'hdmi', live: false },
+        { title: 'TV HDMI 3', sub: 'Blu-ray player', icon: 'hdmi', live: false },
+        { title: 'TV Antenna', sub: 'Broadcast', icon: 'antenna', live: true }
       ]
     }
   ]

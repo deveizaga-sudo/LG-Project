@@ -1,6 +1,6 @@
 /* ==========================================================================
-   LG Project Home — webOS TV layout (1920x1080)
-   Safe area: 64px horizontal / 48px vertical overscan margins.
+   TV Home — Fire TV layout (1920x1080)
+   Safe area: 5% overscan margins (96px / 54px), per Fire TV UI guidelines.
    ========================================================================== */
 
 :root {
@@ -9,13 +9,13 @@
   --surface-2: #1f2430;
   --text: #f2f4f8;
   --text-dim: #9aa3b5;
-  --accent: #e6007e;          /* LG magenta */
-  --accent-2: #ff4fa7;
+  --accent: #ff6a13;
+  --accent-2: #ff9a52;
   --focus: #ffffff;
   --rail-collapsed: 112px;
   --rail-expanded: 340px;
-  --safe-x: 64px;
-  --safe-y: 48px;
+  --safe-x: 96px;
+  --safe-y: 54px;
   --radius: 18px;
   --ease: cubic-bezier(.2, .8, .2, 1);
 }
@@ -29,7 +29,7 @@ html, body {
   overflow: hidden;
   background: var(--bg);
   color: var(--text);
-  font-family: "LG Smart UI", "Museo Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Amazon Ember", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   cursor: default;
 }
@@ -229,7 +229,7 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
   border: 3px solid transparent;
 }
 .btn i { display: inline-flex; font-size: 30px; }
-.btn--primary { background: rgba(230,0,126,.35); }
+.btn--primary { background: rgba(255,106,19,.35); }
 .btn.is-focused { background: var(--focus); color: #111; transform: scale(1.08); box-shadow: 0 12px 40px rgba(0,0,0,.5); }
 
 /* ---------- Rows ---------- */

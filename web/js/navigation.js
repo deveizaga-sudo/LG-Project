@@ -1,5 +1,6 @@
 /*
- * Spatial navigation for the webOS remote (D-pad) plus Magic Remote pointer.
+ * Spatial navigation for the Fire TV remote (D-pad). Mouse support is kept
+ * for testing in a desktop browser.
  *
  * Every element with the `.focusable` class inside the active scope is a
  * candidate. Arrow keys move focus to the nearest candidate in that
@@ -9,10 +10,10 @@
 var Nav = (function () {
   var KEY = {
     LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40,
-    ENTER: 13,
-    BACK: 461,          // webOS remote Back
-    BACKSPACE: 8,       // desktop browser fallback
-    ESC: 27
+    ENTER: 13,          // remote Select (DPAD_CENTER arrives as Enter)
+    PLAY_PAUSE: 179,    // remote Play/Pause acts on the focused item
+    BACKSPACE: 8,       // desktop browser stand-ins for Back; on Fire TV the
+    ESC: 27             // Android wrapper calls Nav.back() instead
   };
 
   var scope = document;
@@ -99,8 +100,8 @@ var Nav = (function () {
       case KEY.RIGHT: move('right'); break;
       case KEY.UP:    move('up'); break;
       case KEY.DOWN:  move('down'); break;
-      case KEY.ENTER: if (current) emit('select', current); break;
-      case KEY.BACK:
+      case KEY.ENTER:
+      case KEY.PLAY_PAUSE: if (current) emit('select', current); break;
       case KEY.BACKSPACE:
       case KEY.ESC:   emit('back'); break;
       default: return;
@@ -108,7 +109,7 @@ var Nav = (function () {
     e.preventDefault();
   }
 
-  // Magic Remote: pointer hover moves focus, click selects.
+  // Desktop browser testing: hover moves focus, click selects.
   function onPointerOver(e) {
     var el = e.target.closest && e.target.closest('.focusable');
     if (el && (scope === document || scope.contains(el))) {
@@ -128,11 +129,6 @@ var Nav = (function () {
     document.addEventListener('keydown', onKey);
     document.addEventListener('mouseover', onPointerOver);
     document.addEventListener('click', onClick);
-    // webOS fires this when the Magic Remote pointer appears/disappears.
-    document.addEventListener('cursorStateChange', function (e) {
-      var visible = e.detail && e.detail.visibility;
-      document.body.classList.toggle('dpad-mode', !visible);
-    });
   }
 
   var api = {
@@ -140,6 +136,8 @@ var Nav = (function () {
     on: on,
     focus: focus,
     setScope: setScope,
+    // Called by the Android wrapper, since WebView never sees the Back key.
+    back: function () { emit('back'); },
     override: null,
     get current() { return current; }
   };

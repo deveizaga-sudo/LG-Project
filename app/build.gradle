@@ -1,0 +1,36 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.tvproject.home'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.tvproject.home'
+        // Fire OS 5 (API 22) and up; the Fire TV Cube runs Fire OS 7 (API 28) or later.
+        minSdk 22
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // The layout lives in /web so it can also be opened in a desktop browser;
+    // it is bundled into the APK as assets.
+    sourceSets {
+        main {
+            assets.srcDirs = ['../web']
+        }
+    }
+}
