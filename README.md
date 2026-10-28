@@ -24,6 +24,23 @@ A simple iPhone and iPad app that teaches kids aged about 4–8 their first Span
 
 It needs iOS/iPadOS 17 or later. If the Spanish voice sounds robotic, download a better one on the device under **Settings → Accessibility → Spoken Content → Voices → Spanish**.
 
+## Testing on GitHub (works from Windows)
+
+Every push triggers the **iOS build & test** workflow (`.github/workflows/ios.yml`). It runs on one of GitHub's Macs and:
+
+1. builds the app with Xcode,
+2. runs the logic tests in `Tests/HolaAmigosTests` (quiz rules, stars and saved progress),
+3. plays through the app in an iPhone simulator (`Tests/HolaAmigosUITests`): it opens Animales, swipes the flashcards, plays a full round including one wrong answer, and checks the results screen,
+4. saves a screenshot of every screen.
+
+To see the results:
+
+1. Open the repository on github.com and click the **Actions** tab.
+2. Click the latest **iOS build & test** run. A green check means everything passed; a red ✗ shows which step failed.
+3. Scroll to **Artifacts** at the bottom of the run page and download **screenshots**. It's a zip of PNGs you can open on any computer.
+
+To start a run without pushing code, click **Run workflow** on the workflow's page. The Xcode project is generated on the fly from `project.yml` with XcodeGen, so there's nothing extra to keep in sync.
+
 ## Project layout
 
 ```

@@ -16,6 +16,7 @@ struct HomeView: View {
                                 TopicCard(topic: topic, stars: progress.stars(for: topic))
                             }
                             .buttonStyle(BouncyButtonStyle())
+                            .accessibilityIdentifier("topic-\(topic.id)")
                         }
                     }
                 }

@@ -19,6 +19,7 @@ struct ResultView: View {
                     .font(.system(size: 100))
                 VStack(spacing: 6) {
                     Text("¡Terminaste!")
+                        .accessibilityIdentifier("result-title")
                         .font(Theme.title(44))
                         .foregroundStyle(Theme.ink)
                     Text("You finished \(topic.subtitle.lowercased())!")

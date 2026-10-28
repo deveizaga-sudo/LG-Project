@@ -83,5 +83,6 @@ private struct WordCard: View {
         .buttonStyle(BouncyButtonStyle())
         .accessibilityLabel("\(word.spanish), \(word.english)")
         .accessibilityHint("Plays the Spanish word")
+        .accessibilityIdentifier("flashcard-\(word.id)")
     }
 }

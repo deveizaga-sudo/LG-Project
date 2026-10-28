@@ -26,11 +26,13 @@ struct TopicView: View {
                 } label: {
                     ModeButton(icon: "book.fill", title: "Aprender", subtitle: "Learn the words", color: topic.tintDeep)
                 }
+                .accessibilityIdentifier("mode-learn")
                 NavigationLink {
                     QuizView(topic: topic)
                 } label: {
                     ModeButton(icon: "gamecontroller.fill", title: "Jugar", subtitle: "Play and win stars", color: Theme.accent)
                 }
+                .accessibilityIdentifier("mode-play")
             }
             .buttonStyle(BouncyButtonStyle())
             .frame(maxWidth: 480)

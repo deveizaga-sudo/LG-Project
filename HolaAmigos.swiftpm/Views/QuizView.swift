@@ -125,6 +125,7 @@ struct QuizView: View {
                 }
                 .buttonStyle(BouncyButtonStyle())
                 .accessibilityHint("Plays the word again")
+                .accessibilityIdentifier("prompt-\(question.answer.id)")
             }
         case .seePicture:
             VStack(spacing: 10) {
@@ -138,6 +139,7 @@ struct QuizView: View {
                     .font(.system(size: 130))
                     .padding(.top, 6)
                     .accessibilityLabel(question.answer.english)
+                    .accessibilityIdentifier("prompt-\(question.answer.id)")
             }
         }
     }
@@ -154,6 +156,7 @@ struct QuizView: View {
                             .frame(maxWidth: .infinity, minHeight: 130)
                     }
                     .accessibilityLabel(word.english)
+                    .accessibilityIdentifier("choice-\(word.id)")
                 }
             }
         case .seePicture:
@@ -166,6 +169,7 @@ struct QuizView: View {
                             .frame(maxWidth: .infinity, minHeight: 72)
                     }
                     .accessibilityLabel(word.spanish)
+                    .accessibilityIdentifier("choice-\(word.id)")
                 }
             }
         }
